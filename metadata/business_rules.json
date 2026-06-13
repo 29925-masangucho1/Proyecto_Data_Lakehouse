@@ -1,0 +1,68 @@
+{
+  "description": "Business rules for quality validation and derived metrics",
+  "version": "1.0",
+  "rules": {
+    "suspicious_trip": {
+      "description": "Mark trip as suspicious if any condition is met",
+      "conditions": [
+        "trip_distance <= 0",
+        "total_amount <= 0",
+        "fare_amount < 0",
+        "trip_duration_minutes <= 0",
+        "trip_duration_minutes > 480",
+        "average_speed_mph > 100",
+        "tip_percentage > 100",
+        "pickup_datetime > dropoff_datetime",
+        "pickup_datetime > current_timestamp()"
+      ]
+    },
+    "rejection_rules": {
+      "invalid_dates": {
+        "description": "Reject records with null or future pickup/dropoff dates",
+        "severity": "critical"
+      },
+      "negative_amounts": {
+        "description": "Reject records with negative fare or total amount",
+        "severity": "critical"
+      },
+      "zero_distance": {
+        "description": "Reject records with trip_distance <= 0",
+        "severity": "warning"
+      },
+      "invalid_duration": {
+        "description": "Reject records with negative or excessive duration",
+        "severity": "warning"
+      },
+      "unrealistic_speed": {
+        "description": "Reject records with average speed > 100 mph",
+        "severity": "warning"
+      },
+      "technical_duplicates": {
+        "description": "Reject exact duplicate rows based on key fields",
+        "severity": "critical"
+      },
+      "null_critical": {
+        "description": "Reject records with null values in critical columns",
+        "severity": "critical"
+      }
+    },
+    "critical_columns": [
+      "pickup_datetime",
+      "dropoff_datetime",
+      "pickup_location_id",
+      "dropoff_location_id",
+      "fare_amount",
+      "total_amount",
+      "trip_distance"
+    ],
+    "recovery_classification": {
+      "RECOVERABLE_SCHEMA_MISMATCH": "Columns exist but types differ; casting can recover",
+      "RECOVERABLE_MISSING_COLUMNS": "Some columns missing; null fill can recover",
+      "RECOVERABLE_TYPE_CASTING": "Type casting needed; safe cast with error handling",
+      "PARTIALLY_RECOVERABLE": "Some partitions readable, others not",
+      "NOT_RECOVERABLE_CORRUPT_METADATA": "Parquet metadata corrupt; cannot read schema",
+      "NOT_RECOVERABLE_EMPTY_FILE": "File has zero records or is empty",
+      "NOT_RECOVERABLE_UNSUPPORTED_FORMAT": "File format not supported by reader"
+    }
+  }
+}

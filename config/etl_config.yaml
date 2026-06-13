@@ -1,0 +1,67 @@
+etl:
+  process_name: "nyc_taxi_parquet_pipeline"
+  spark_app_name: "NYC_Taxi_ETL_Parquet"
+  spark_master: "local[*]"
+  shuffle_partitions: 200
+
+paths:
+  base_data: "data"
+  raw: "data/raw"
+  bronze: "data/bronze"
+  silver: "data/silver"
+  gold: "data/gold"
+  quarantine: "data/quarantine"
+  audit: "data/audit"
+  metadata: "metadata"
+
+services:
+  - name: yellow
+    path: "data/raw/yellow"
+    partition_pattern: "year=*/month=*/*.parquet"
+    expected_schema: "metadata/expected_schema_yellow.json"
+  - name: green
+    path: "data/raw/green"
+    partition_pattern: "year=*/month=*/*.parquet"
+    expected_schema: "metadata/expected_schema_green.json"
+  - name: fhvhv
+    path: "data/raw/fhvhv"
+    partition_pattern: "year=*/month=*/*.parquet"
+    expected_schema: "metadata/expected_schema_fhvhv.json"
+
+canonical_schema: "metadata/canonical_schema_trips.json"
+business_rules: "metadata/business_rules.json"
+
+quality:
+  max_trip_duration_minutes: 480
+  max_speed_mph: 100
+  max_tip_percentage: 100
+  min_fare_amount: 0
+  min_trip_distance: 0
+  critical_columns:
+    - pickup_datetime
+    - dropoff_datetime
+    - pickup_location_id
+    - dropoff_location_id
+    - fare_amount
+    - total_amount
+    - trip_distance
+
+database:
+  type: "sqlite"
+  path: "data/nyc_taxi_etl.db"
+  tables:
+    gold_trips_clean: "gold_trips_clean"
+    gold_daily_revenue: "gold_daily_revenue"
+    gold_location_performance: "gold_location_performance"
+    quality_rejected_records: "quality_rejected_records"
+    quality_metrics_summary: "quality_metrics_summary"
+    audit_file_inventory: "audit_file_inventory"
+
+spark_optimizations:
+  inferSchema: false
+  mergeSchema: false
+  enableVectorizedReader: true
+  parquetEnableDictionary: true
+  adaptiveQueryExecution: true
+  coalesceOnWrite: true
+  targetFileSizeMB: 128

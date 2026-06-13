@@ -1,0 +1,13 @@
+{
+  "service_type": "fhvhv",
+  "description": "NYC FHVHV (High-Volume For-Hire Vehicle) trip records",
+  "columns": [
+    {"name": "dispatching_base_num", "type": "string", "nullable": true, "description": "Base number of dispatcher"},
+    {"name": "pickup_datetime", "type": "timestamp_ntz", "nullable": true, "description": "Pickup date/time"},
+    {"name": "dropOff_datetime", "type": "timestamp_ntz", "nullable": true, "description": "Dropoff date/time"},
+    {"name": "PUlocationID", "type": "double", "nullable": true, "description": "Pickup location zone ID"},
+    {"name": "DOlocationID", "type": "double", "nullable": true, "description": "Dropoff location zone ID"},
+    {"name": "SR_Flag", "type": "int", "nullable": true, "description": "Shared ride flag"},
+    {"name": "Affiliated_base_number", "type": "string", "nullable": true, "description": "Affiliated base number"}
+  ]
+}

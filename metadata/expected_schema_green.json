@@ -1,0 +1,26 @@
+{
+  "service_type": "green",
+  "description": "NYC Green Taxi trip records",
+  "columns": [
+    {"name": "VendorID", "type": "long", "nullable": true, "description": "TPEP provider code"},
+    {"name": "lpep_pickup_datetime", "type": "timestamp_ntz", "nullable": true, "description": "Pickup date/time"},
+    {"name": "lpep_dropoff_datetime", "type": "timestamp_ntz", "nullable": true, "description": "Dropoff date/time"},
+    {"name": "store_and_fwd_flag", "type": "string", "nullable": true, "description": "Store-and-forward flag"},
+    {"name": "RatecodeID", "type": "double", "nullable": true, "description": "Rate code"},
+    {"name": "PULocationID", "type": "long", "nullable": true, "description": "Pickup location zone ID"},
+    {"name": "DOLocationID", "type": "long", "nullable": true, "description": "Dropoff location zone ID"},
+    {"name": "passenger_count", "type": "double", "nullable": true, "description": "Number of passengers"},
+    {"name": "trip_distance", "type": "double", "nullable": true, "description": "Trip distance in miles"},
+    {"name": "fare_amount", "type": "double", "nullable": true, "description": "Fare amount"},
+    {"name": "extra", "type": "double", "nullable": true, "description": "Extra charges"},
+    {"name": "mta_tax", "type": "double", "nullable": true, "description": "MTA tax amount"},
+    {"name": "tip_amount", "type": "double", "nullable": true, "description": "Tip amount"},
+    {"name": "tolls_amount", "type": "double", "nullable": true, "description": "Tolls amount"},
+    {"name": "ehail_fee", "type": "int", "nullable": true, "description": "E-hail fee"},
+    {"name": "improvement_surcharge", "type": "double", "nullable": true, "description": "Improvement surcharge"},
+    {"name": "total_amount", "type": "double", "nullable": true, "description": "Total charged amount"},
+    {"name": "payment_type", "type": "double", "nullable": true, "description": "Payment method code"},
+    {"name": "trip_type", "type": "double", "nullable": true, "description": "Trip type (1=Street-hail, 2=Dispatching)"},
+    {"name": "congestion_surcharge", "type": "double", "nullable": true, "description": "Congestion surcharge"}
+  ]
+}
