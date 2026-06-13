@@ -12,6 +12,8 @@ from pyspark.sql import SparkSession
 def setup_logger(name, log_file=None, level=logging.INFO):
     logger = logging.getLogger(name)
     logger.setLevel(level)
+    if logger.handlers:
+        logger.handlers.clear()
     fmt = logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s")
     ch = logging.StreamHandler()
     ch.setFormatter(fmt)
